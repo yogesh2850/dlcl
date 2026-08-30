@@ -155,7 +155,7 @@ export default function HomePage() {
                 <Caption>Field tests in twilight, when Perception Recovery matters most.</Caption>
               </figure>
             </div>
-            <div className="mx-auto mt-10 max-w-3xl space-y-5 text-base leading-relaxed text-mist">
+            <div className="mx-auto mt-10 max-w-3xl space-y-5 text-base leading-relaxed text-ink">
               {siteContent.introduction.map((para) => (
                 <p key={para.slice(0, 40)}>{para}</p>
               ))}
@@ -172,7 +172,7 @@ export default function HomePage() {
               {siteContent.contributions.map((item) => (
                 <li key={item.title}>
                   <p className="font-medium text-gold">{item.title}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-mist">{item.body}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-ink">{item.body}</p>
                 </li>
               ))}
             </ul>
@@ -187,7 +187,7 @@ export default function HomePage() {
 
             <div className="mt-12">
               <h3 className="font-display text-2xl text-ink">Hardware</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.methodology.hardware}
               </p>
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -210,7 +210,7 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">Perception</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.methodology.perception}
               </p>
               <figure className="mt-6">
@@ -239,7 +239,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Perception Recovery
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.methodology.recovery}
               </p>
             </div>
@@ -248,7 +248,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Cooperative localization
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.methodology.localization}
               </p>
             </div>
@@ -257,7 +257,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Simulation-to-real stack
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.methodology.simToReal}
               </p>
             </div>
@@ -283,7 +283,7 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">Detection benchmark</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.results.detection}
               </p>
               <div className="mt-6 overflow-x-auto">
@@ -346,7 +346,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Perception Recovery, in the field
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.results.recovery}
               </p>
               <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -479,7 +479,7 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">Localization</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.results.localization}
               </p>
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -512,7 +512,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Ablation — team size
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.results.teamSize}
               </p>
               <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -539,7 +539,7 @@ export default function HomePage() {
               <h3 className="font-display text-2xl text-ink">
                 Ablation — crop size vs. distance
               </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
                 {siteContent.results.crop}
               </p>
               <figure className="mt-6">
@@ -565,7 +565,7 @@ export default function HomePage() {
               {siteContent.qa.map((item) => (
                 <div key={item.q}>
                   <p className="font-medium text-ink">Q: {item.q}</p>
-                  <p className="mt-2 pl-4 text-sm leading-relaxed text-mist">
+                  <p className="mt-2 pl-4 text-sm leading-relaxed text-ink">
                     {item.a}
                   </p>
                 </div>
@@ -587,7 +587,7 @@ export default function HomePage() {
         <section className="px-6 py-16">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="font-display text-3xl text-ink">Paper &amp; Contact</h2>
-            <p className="mt-6 text-sm text-mist">
+            <p className="mt-6 text-sm text-ink">
               Corresponding author:{' '}
               <a
                 href={`mailto:${siteContent.contact.email}`}
@@ -596,7 +596,7 @@ export default function HomePage() {
                 {siteContent.contact.corresponding} ({siteContent.contact.email})
               </a>
             </p>
-            <div className="mt-4 space-y-2 text-sm text-mist">
+            <div className="mt-4 space-y-2 text-sm text-ink">
               {siteContent.contact.notes.map((note) => (
                 <p key={note}>{note}</p>
               ))}
