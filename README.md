@@ -1,12 +1,12 @@
 # DLCL
 
-Website for **DLCL**, hosted at [https://yogesh2850.github.io/dlcl](https://yogesh2850.github.io/dlcl).
+Website for **DLCL: Deep Learning-enabled Cooperative Localization for UAV-UGV Team with Adaptive Perception Recovery** (IJCV, under review).
 
-This is a separate project from [GRASP](https://yogesh2850.github.io/grasp/).
+Live: [https://yogesh2850.github.io/dlcl](https://yogesh2850.github.io/dlcl)
 
 ## Edit content
 
-Update copy, people, and research cards in `src/constant/site-content.ts`.
+Copy, authors, stats, Q&A, and citation live in `src/constant/site-content.ts`. Paper PDF is `public/paper/dlcl.pdf`. Figures are under `public/images/`.
 
 ## Local development
 
@@ -17,4 +17,4 @@ npm run dev
 
 ## Deploy
 
-Pushes to `main` build a static export into `docs/` and publish it with GitHub Pages.
+Pushes to `main` build a static export and publish it with GitHub Pages.

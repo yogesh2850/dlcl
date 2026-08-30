@@ -1,117 +1,602 @@
+import type { ReactNode } from 'react';
+import CopyCitation from '@/components/CopyCitation';
+import StickyNav from '@/components/StickyNav';
 import { siteContent } from '@/constant/site-content';
+import { asset } from '@/lib/asset';
 
-const NAV = [
-  { label: 'About', href: '#about' },
-  { label: 'Research', href: '#research' },
-  { label: 'People', href: '#people' },
-  { label: 'Contact', href: '#contact' },
-];
+function Caption({ children }: { children: ReactNode }) {
+  return (
+    <p className="mt-2 text-center text-xs leading-relaxed text-mist">{children}</p>
+  );
+}
 
 export default function HomePage() {
+  const breakAfter = siteContent.authors.findIndex(
+    (author) => author.name === siteContent.authorBreakAfter,
+  );
+
   return (
-    <main>
-      <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/80 backdrop-blur-md">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <a href="#top" className="font-display text-xl tracking-tight text-paper">
-            {siteContent.name}
-          </a>
-          <nav className="flex gap-6 text-sm text-mist">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="transition-colors hover:text-gold"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </header>
+    <>
+      <StickyNav />
 
-      <section
-        id="top"
-        className="flex min-h-screen flex-col items-center justify-center px-6 pt-20 text-center"
-      >
-        <p className="mb-6 text-xs font-medium uppercase tracking-[0.35em] text-gold">
-          {siteContent.location}
-        </p>
-        <h1 className="font-display text-7xl font-medium tracking-tight text-paper sm:text-8xl">
-          {siteContent.name}
-        </h1>
-        {siteContent.expansion ? (
-          <p className="mt-4 max-w-xl text-lg text-mist">{siteContent.expansion}</p>
-        ) : null}
-        <p className="mt-6 max-w-lg text-lg text-paper/80">{siteContent.tagline}</p>
-        <div className="mt-10 h-px w-16 bg-gold" />
-      </section>
+      <main>
+        <section
+          id="top"
+          className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-24 text-center"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(196,163,90,0.16),_transparent_55%),linear-gradient(180deg,#0c1220_0%,#10182a_100%)]" />
 
-      <section id="about" className="mx-auto max-w-3xl px-6 py-24">
-        <h2 className="font-display text-3xl text-paper">About</h2>
-        <p className="mt-6 text-lg leading-relaxed text-mist">{siteContent.about}</p>
-      </section>
-
-      <section id="research" className="border-y border-white/10 bg-black/20">
-        <div className="mx-auto max-w-5xl px-6 py-24">
-          <h2 className="font-display text-3xl text-paper">Research</h2>
-          <div className="mt-10 grid gap-8 sm:grid-cols-3">
-            {siteContent.research.map((item) => (
-              <article
-                key={item.title}
-                className="border border-white/10 bg-ink p-6"
-              >
-                <h3 className="font-display text-xl text-gold">{item.title}</h3>
-                <p className="mt-3 text-sm leading-relaxed text-mist">{item.body}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section id="people" className="mx-auto max-w-5xl px-6 py-24">
-        <h2 className="font-display text-3xl text-paper">People</h2>
-        <ul className="mt-10 space-y-4">
-          {siteContent.people.map((person) => (
-            <li key={person.name} className="flex flex-col sm:flex-row sm:items-baseline sm:gap-4">
-              {person.url ? (
-                <a
-                  href={person.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-medium text-paper underline decoration-gold/50 underline-offset-4 hover:text-gold"
+          <div className="relative z-10 mx-auto max-w-4xl">
+            <h1 className="font-display text-3xl font-medium leading-snug tracking-tight sm:text-4xl md:text-5xl">
+              {siteContent.titleHighlights.map((part) => (
+                <span
+                  key={part.text}
+                  className={part.highlight ? 'text-gold' : 'text-paper'}
                 >
-                  {person.name}
-                </a>
-              ) : (
-                <span className="font-medium text-paper">{person.name}</span>
-              )}
-              <span className="text-mist">{person.role}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+                  {part.text}
+                </span>
+              ))}
+            </h1>
 
-      <footer id="contact" className="border-t border-white/10">
-        <div className="mx-auto flex max-w-5xl flex-col gap-3 px-6 py-16 text-sm text-mist sm:flex-row sm:items-center sm:justify-between">
-          <p>{siteContent.name}</p>
-          <div className="flex gap-6">
-            <a
-              href={`mailto:${siteContent.contact.email}`}
-              className="hover:text-gold"
-            >
-              {siteContent.contact.email}
-            </a>
-            <a
-              href={siteContent.contact.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-gold"
-            >
-              GitHub
-            </a>
+            <p className="mt-8 text-base font-medium leading-relaxed text-paper sm:text-lg">
+              {siteContent.authors.map((author, i) => (
+                <span key={author.name}>
+                  {i > 0 && (i === breakAfter + 1 ? <br /> : ', ')}
+                  {author.url ? (
+                    <a
+                      href={author.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
+                    >
+                      {author.name}
+                    </a>
+                  ) : (
+                    author.name
+                  )}
+                  {author.corresponding ? (
+                    <sup className="ml-0.5 text-gold">*</sup>
+                  ) : null}
+                  <sup className="ml-0.5 text-xs text-mist">{author.affiliations}</sup>
+                </span>
+              ))}
+            </p>
+
+            <div className="mt-6 flex flex-col items-center gap-2 text-sm text-mist">
+              {siteContent.affiliations.map((aff) => (
+                <div key={aff.id} className="flex items-center gap-2">
+                  <sup className="text-gold">{aff.id}</sup>
+                  <img
+                    src={asset(aff.logo)}
+                    alt=""
+                    className="h-5 object-contain opacity-90"
+                  />
+                  <span>{aff.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+              {siteContent.links.map((link) =>
+                link.live ? (
+                  <a
+                    key={link.label}
+                    href={link.href.startsWith('/') ? asset(link.href) : link.href}
+                    {...(link.href.startsWith('mailto:')
+                      ? {}
+                      : { target: '_blank', rel: 'noopener noreferrer' })}
+                    className="rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-sm font-medium text-paper transition-colors hover:bg-gold/20"
+                  >
+                    {link.label}
+                  </a>
+                ) : (
+                  <span
+                    key={link.label}
+                    className="rounded-full border border-white/15 px-5 py-2 text-sm text-mist"
+                  >
+                    {link.label}
+                  </span>
+                ),
+              )}
+            </div>
           </div>
-        </div>
-      </footer>
-    </main>
+        </section>
+
+        <section className="px-6 py-12">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-gold/5 px-6 py-6 sm:px-8">
+            <p className="text-base leading-relaxed text-paper/90">
+              <span className="font-semibold text-gold">TL;DR. </span>
+              {siteContent.tldr}
+            </p>
+          </div>
+        </section>
+
+        <section id="abstract" className="px-6 py-16">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-center font-display text-3xl text-paper">
+              Introduction
+            </h2>
+            <div className="mt-10 grid gap-4 sm:grid-cols-2">
+              <figure>
+                <img
+                  src={asset('/images/intro/abc_day.jpeg')}
+                  alt="Field tests in daytime"
+                  className="w-full rounded-xl border border-white/10 object-cover"
+                />
+                <Caption>Field tests in daytime — Alpha, Bravo, and Charlie.</Caption>
+              </figure>
+              <figure>
+                <img
+                  src={asset('/images/intro/abc_twilight.jpg')}
+                  alt="Field tests in twilight"
+                  className="w-full rounded-xl border border-white/10 object-cover"
+                />
+                <Caption>Field tests in twilight, when Perception Recovery matters most.</Caption>
+              </figure>
+            </div>
+            <div className="mx-auto mt-10 max-w-3xl space-y-5 text-base leading-relaxed text-mist">
+              {siteContent.introduction.map((para) => (
+                <p key={para.slice(0, 40)}>{para}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="contributions" className="border-y border-white/10 bg-black/20 px-6 py-16">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-center font-display text-3xl text-paper">
+              Key Contributions
+            </h2>
+            <ul className="mt-10 space-y-6">
+              {siteContent.contributions.map((item) => (
+                <li key={item.title}>
+                  <p className="font-medium text-gold">{item.title}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-mist">{item.body}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section id="methodology" className="px-6 py-16">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="border-b border-white/10 pb-3 font-display text-3xl text-paper">
+              Methodology
+            </h2>
+
+            <div className="mt-12">
+              <h3 className="font-display text-2xl text-paper">Hardware</h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.hardware}
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                {[
+                  { src: '/images/exp_setup/alpha.jpeg', label: 'Alpha — Wispr Ranger Pro quadcopter' },
+                  { src: '/images/exp_setup/bravo.jpeg', label: 'Bravo — in-house hexacopter' },
+                  { src: '/images/exp_setup/charlie.jpeg', label: 'Charlie — shaft-drive 4WD UGV' },
+                ].map((item) => (
+                  <figure key={item.src}>
+                    <img
+                      src={asset(item.src)}
+                      alt={item.label}
+                      className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover"
+                    />
+                    <Caption>{item.label}</Caption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">Perception</h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.perception}
+              </p>
+              <figure className="mt-6">
+                <img
+                  src={asset('/images/method/illustration.png')}
+                  alt="Camera layout for cooperative detection"
+                  className="mx-auto w-full max-w-2xl rounded-xl border border-white/10 bg-white object-contain p-2"
+                />
+                <Caption>
+                  Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
+                </Caption>
+              </figure>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Perception Recovery
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.recovery}
+              </p>
+              <figure className="mt-6">
+                <img
+                  src={asset('/images/complete_model_arch.jpg')}
+                  alt="DLCL perception and localization pipeline"
+                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                />
+                <Caption>
+                  Each robot runs calibration, YOLO, Perception Recovery, pose estimation, and Kalman filtering before cooperative fusion.
+                </Caption>
+              </figure>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Cooperative localization
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.localization}
+              </p>
+              <figure className="mt-6">
+                <img
+                  src={asset('/images/graphical_abstract_1.jpg')}
+                  alt="DLCL architecture overview"
+                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                />
+                <Caption>
+                  GNSS degradation and missed detections cascade through time; DLCL forecasts confidence, recovers perception, and fuses vision with GNSS.
+                </Caption>
+              </figure>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Simulation-to-real stack
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.simToReal}
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="results" className="border-y border-white/10 bg-black/20 px-6 py-16">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="font-display text-3xl text-paper">Results</h2>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {siteContent.stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="border border-gold/20 bg-ink p-5 text-center"
+                >
+                  <p className="font-display text-3xl text-gold">{stat.value}</p>
+                  <p className="mt-2 text-sm font-medium text-paper">{stat.label}</p>
+                  <p className="mt-1 text-xs text-mist">{stat.sub}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">Detection benchmark</h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.results.detection}
+              </p>
+              <div className="mt-6 overflow-x-auto">
+                <table className="w-full min-w-[32rem] text-left text-sm">
+                  <caption className="mb-3 text-left text-xs text-mist">
+                    {siteContent.detectorTable.caption}
+                  </caption>
+                  <thead>
+                    <tr className="border-b border-white/15 text-gold">
+                      {siteContent.detectorTable.headers.map((h) => (
+                        <th key={h} className="py-2 pr-4 font-medium">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="text-paper/90">
+                    {siteContent.detectorTable.rows.map((row) => (
+                      <tr key={row[0]} className="border-b border-white/10">
+                        {row.map((cell, i) => (
+                          <td
+                            key={`${row[0]}-${i}`}
+                            className={`py-2 pr-4 ${
+                              row[0] === 'YOLOv11 small' && i === 1
+                                ? 'font-semibold text-gold'
+                                : ''
+                            }`}
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {[
+                  '/images/uav_00.jpg',
+                  '/images/uav_01.jpeg',
+                  '/images/uav_02.jpeg',
+                  '/images/ugv_10.jpg',
+                  '/images/ugv_11.jpg',
+                  '/images/ugv_12.jpg',
+                ].map((src) => (
+                  <img
+                    key={src}
+                    src={asset(src)}
+                    alt="YOLO detection on the UAV–UGV dataset"
+                    className="aspect-video w-full rounded-lg border border-white/10 object-cover"
+                  />
+                ))}
+              </div>
+              <Caption>
+                Detections on the UAV–UGV dataset across vehicle types, backgrounds, and lighting.
+              </Caption>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Perception Recovery, in the field
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.results.recovery}
+              </p>
+              <div className="mt-6 grid gap-6 lg:grid-cols-2">
+                <figure>
+                  <div className="grid grid-cols-4 gap-1">
+                    {[1, 2, 3, 4].map((i) => (
+                      <img
+                        key={`bravo-pr-${i}`}
+                        src={asset(`/images/results/adaptive_perception/uav/adaptive/a_uav_v9n_${i}.jpeg`)}
+                        alt=""
+                        className="aspect-video w-full object-cover"
+                      />
+                    ))}
+                    {[1, 2, 3, 4].map((i) => (
+                      <img
+                        key={`bravo-base-${i}`}
+                        src={asset(`/images/results/adaptive_perception/uav/base/b_uav_v9n_${i}.jpeg`)}
+                        alt=""
+                        className="aspect-video w-full object-cover"
+                      />
+                    ))}
+                  </div>
+                  <Caption>
+                    Bravo at twilight: YOLOv10-nano with Perception Recovery (top) vs. without (bottom).
+                  </Caption>
+                </figure>
+                <figure>
+                  <div className="grid grid-cols-4 gap-1">
+                    {[1, 2, 3, 4].map((i) => (
+                      <img
+                        key={`charlie-pr-${i}`}
+                        src={asset(`/images/results/adaptive_perception/ugv/adaptive/a_ugv_v10n_${i}.jpeg`)}
+                        alt=""
+                        className="aspect-video w-full object-cover"
+                      />
+                    ))}
+                    {[1, 2, 3, 4].map((i) => (
+                      <img
+                        key={`charlie-base-${i}`}
+                        src={asset(`/images/results/adaptive_perception/ugv/base/b_ugv_v10n_${i}.jpeg`)}
+                        alt=""
+                        className="aspect-video w-full object-cover"
+                      />
+                    ))}
+                  </div>
+                  <Caption>
+                    Charlie at twilight: YOLOv9-tiny with Perception Recovery (top) vs. without (bottom).
+                  </Caption>
+                </figure>
+              </div>
+              <div className="mt-8 overflow-x-auto">
+                <table className="w-full min-w-[32rem] text-left text-sm">
+                  <caption className="mb-3 text-left text-xs text-mist">
+                    {siteContent.recoveryTable.caption}
+                  </caption>
+                  <thead>
+                    <tr className="border-b border-white/15 text-gold">
+                      {siteContent.recoveryTable.headers.map((h) => (
+                        <th key={h} className="py-2 pr-4 font-medium">
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="text-paper/90">
+                    {siteContent.recoveryTable.rows.map((row) => (
+                      <tr
+                        key={row[0]}
+                        className={`border-b border-white/10 ${
+                          row[0].endsWith('-PR') ? 'bg-gold/5' : ''
+                        }`}
+                      >
+                        {row.map((cell, i) => (
+                          <td key={`${row[0]}-${i}`} className="py-2 pr-4">
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                {[
+                  { src: '/images/PR_results/T1C0_plot.jpg', label: 'Dataset 1, iPhone 6' },
+                  { src: '/images/PR_results/T1C3_plot.jpg', label: 'Dataset 1, Sony NEX-5N' },
+                  { src: '/images/PR_results/T2C0_plot.jpg', label: 'Dataset 2, iPhone 6' },
+                  { src: '/images/PR_results/T2C3_plot.jpg', label: 'Dataset 2, Sony NEX-5N' },
+                ].map((item) => (
+                  <figure key={item.src}>
+                    <img
+                      src={asset(item.src)}
+                      alt={item.label}
+                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                    />
+                    <Caption>{item.label} — base YOLO vs. Perception Recovery.</Caption>
+                  </figure>
+                ))}
+              </div>
+              <div className="mt-8 grid gap-4">
+                {[
+                  {
+                    src: '/images/PR_results/combined_T1C0_v8s_vs_v8s_pr.jpg',
+                    label: 'Dataset-1 Cam0: YOLOv8s vs YOLOv8s-PR',
+                  },
+                  {
+                    src: '/images/PR_results/combined_T1C0_v8x_vs_v8s_pr.jpg',
+                    label: 'Dataset-1 Cam0: YOLOv8x vs YOLOv8s-PR',
+                  },
+                  {
+                    src: '/images/PR_results/combined_T2C0_v9e_vs_v9t_pr.jpg',
+                    label: 'Dataset-2 Cam0: YOLOv9e vs YOLOv9t-PR',
+                  },
+                  {
+                    src: '/images/PR_results/combined_T2C0_v9t_vs_v9t_pr.jpg',
+                    label: 'Dataset-2 Cam0: YOLOv9t vs YOLOv9t-PR',
+                  },
+                ].map((item) => (
+                  <figure key={item.src}>
+                    <img
+                      src={asset(item.src)}
+                      alt={item.label}
+                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                    />
+                    <Caption>{item.label}. Left: raw detector. Middle: ground truth. Right: PR-corrected.</Caption>
+                  </figure>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">Localization</h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.results.localization}
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-3">
+                {[
+                  { src: '/images/results/localization/alpha_ellipsoid.png', label: 'Alpha' },
+                  { src: '/images/results/localization/bravo_ellipsoid.png', label: 'Bravo' },
+                  { src: '/images/results/localization/charlie_ellipsoid.png', label: 'Charlie' },
+                ].map((item) => (
+                  <figure key={item.src}>
+                    <img
+                      src={asset(item.src)}
+                      alt={`${item.label} 3-sigma uncertainty ellipsoid`}
+                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                    />
+                    <Caption>{item.label} — GNSS (red) vs. fused GNSS+vision (blue).</Caption>
+                  </figure>
+                ))}
+              </div>
+              <figure className="mt-6">
+                <img
+                  src={asset('/images/results/abc_cov_big.png')}
+                  alt="Covariance heatmap after fusion"
+                  className="mx-auto w-full max-w-xl rounded-xl border border-white/10 bg-white object-contain p-2"
+                />
+                <Caption>Covariance heatmap after cooperative fusion.</Caption>
+              </figure>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Ablation — team size
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.results.teamSize}
+              </p>
+              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+                <figure>
+                  <img
+                    src={asset('/images/agents_rmse.jpg')}
+                    alt="RMSE versus number of cooperating agents"
+                    className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                  />
+                  <Caption>RMSE falls as more agents join GNSS+vision fusion.</Caption>
+                </figure>
+                <figure>
+                  <img
+                    src={asset('/images/agents_uncert.jpg')}
+                    alt="Uncertainty versus number of cooperating agents"
+                    className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                  />
+                  <Caption>3σ uncertainty keeps tightening; GNSS-only stays flat.</Caption>
+                </figure>
+              </div>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-paper">
+                Ablation — crop size vs. distance
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.results.crop}
+              </p>
+              <figure className="mt-6">
+                <img
+                  src={asset('/images/alpha_charlie_ab.jpg')}
+                  alt="Crop size versus altitude detection matrix"
+                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                />
+                <Caption>
+                  Detection is governed by crop resolution; 192 px is the empirical floor for embedded deployment.
+                </Caption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="qa" className="px-6 py-16">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-center font-display text-3xl text-paper">
+              Questions and Answers
+            </h2>
+            <div className="mt-10 space-y-8">
+              {siteContent.qa.map((item) => (
+                <div key={item.q}>
+                  <p className="font-medium text-paper">Q: {item.q}</p>
+                  <p className="mt-2 pl-4 text-sm leading-relaxed text-mist">
+                    {item.a}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="citation" className="border-t border-white/10 bg-black/20 px-6 py-16">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="font-display text-3xl text-paper">Citation</h2>
+            <pre className="mt-6 overflow-x-auto rounded-xl border border-white/10 bg-ink p-5 text-xs leading-relaxed text-paper/80">
+              {siteContent.citation}
+            </pre>
+            <CopyCitation citation={siteContent.citation} />
+          </div>
+        </section>
+
+        <section className="px-6 py-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="font-display text-3xl text-paper">Paper &amp; Contact</h2>
+            <p className="mt-6 text-sm text-mist">
+              Corresponding author:{' '}
+              <a
+                href={`mailto:${siteContent.contact.email}`}
+                className="text-gold hover:underline"
+              >
+                {siteContent.contact.corresponding} ({siteContent.contact.email})
+              </a>
+            </p>
+            <div className="mt-4 space-y-2 text-sm text-mist">
+              {siteContent.contact.notes.map((note) => (
+                <p key={note}>{note}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <footer className="border-t border-white/10 px-6 py-8 text-center text-xs text-mist">
+          {siteContent.name} · University of Nebraska–Lincoln
+        </footer>
+      </main>
+    </>
   );
 }

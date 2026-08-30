@@ -10,8 +10,17 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.title}`,
   },
   description: siteConfig.description,
+  robots: { index: true, follow: true },
   icons: {
     icon: '/dlcl/favicon.svg',
+  },
+  openGraph: {
+    url: siteConfig.url,
+    title: siteConfig.title,
+    description: siteConfig.description,
+    siteName: 'DLCL',
+    type: 'website',
+    locale: 'en_US',
   },
 };
 
