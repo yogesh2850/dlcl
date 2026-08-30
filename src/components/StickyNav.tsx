@@ -34,8 +34,8 @@ export default function StickyNav() {
     <nav
       className={`fixed top-0 z-50 w-full transition-all duration-300 ${
         scrolled
-          ? 'border-b border-white/10 bg-ink/90 shadow-sm backdrop-blur-md'
-          : 'bg-transparent'
+          ? 'border-b border-gray-200 bg-white/90 shadow-sm backdrop-blur-md'
+          : 'bg-white'
       }`}
     >
       <div className="mx-auto flex max-w-5xl flex-nowrap items-center justify-center gap-1 overflow-x-auto px-4 py-3">
@@ -47,8 +47,8 @@ export default function StickyNav() {
               href={href}
               className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 active === id
-                  ? 'bg-paper text-ink'
-                  : 'text-paper/80 hover:bg-white/10 hover:text-gold'
+                  ? 'bg-ink text-white'
+                  : 'text-ink/70 hover:bg-gray-100 hover:text-gold'
               }`}
             >
               {label}

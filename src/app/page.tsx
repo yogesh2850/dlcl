@@ -24,21 +24,21 @@ export default function HomePage() {
           id="top"
           className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-24 text-center"
         >
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(196,163,90,0.16),_transparent_55%),linear-gradient(180deg,#0c1220_0%,#10182a_100%)]" />
+          <div className="absolute inset-0 bg-white" />
 
           <div className="relative z-10 mx-auto max-w-4xl">
             <h1 className="font-display text-3xl font-medium leading-snug tracking-tight sm:text-4xl md:text-5xl">
               {siteContent.titleHighlights.map((part) => (
                 <span
                   key={part.text}
-                  className={part.highlight ? 'text-gold' : 'text-paper'}
+                  className={part.highlight ? 'text-gold' : 'text-ink'}
                 >
                   {part.text}
                 </span>
               ))}
             </h1>
 
-            <p className="mt-8 text-base font-medium leading-relaxed text-paper sm:text-lg">
+            <p className="mt-8 text-base font-medium leading-relaxed text-ink sm:text-lg">
               {siteContent.authors.map((author, i) => (
                 <span key={author.name}>
                   {i > 0 && (i === breakAfter + 1 ? <br /> : ', ')}
@@ -47,7 +47,7 @@ export default function HomePage() {
                       href={author.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="underline decoration-white/30 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
+                      className="underline decoration-ink/25 underline-offset-4 transition-colors hover:text-gold hover:decoration-gold"
                     >
                       {author.name}
                     </a>
@@ -77,34 +77,44 @@ export default function HomePage() {
             </div>
 
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-              {siteContent.links.map((link) =>
-                link.live ? (
+              {siteContent.links.map((link) => {
+                const inner = (
+                  <>
+                    <img
+                      src={asset(link.icon)}
+                      alt=""
+                      className="h-5 w-5"
+                    />
+                    {link.label}
+                  </>
+                );
+                return link.live ? (
                   <a
                     key={link.label}
                     href={link.href.startsWith('/') ? asset(link.href) : link.href}
                     {...(link.href.startsWith('mailto:')
                       ? {}
                       : { target: '_blank', rel: 'noopener noreferrer' })}
-                    className="rounded-full border border-gold/50 bg-gold/10 px-5 py-2 text-sm font-medium text-paper transition-colors hover:bg-gold/20"
+                    className="flex items-center gap-2 rounded-full border border-gray-300 bg-white px-5 py-2 text-sm font-medium text-ink shadow-sm transition-colors hover:border-gold hover:bg-gold/10"
                   >
-                    {link.label}
+                    {inner}
                   </a>
                 ) : (
                   <span
                     key={link.label}
-                    className="rounded-full border border-white/15 px-5 py-2 text-sm text-mist"
+                    className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2 text-sm text-mist"
                   >
-                    {link.label}
+                    {inner}
                   </span>
-                ),
-              )}
+                );
+              })}
             </div>
           </div>
         </section>
 
         <section className="px-6 py-12">
           <div className="mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-gold/5 px-6 py-6 sm:px-8">
-            <p className="text-base leading-relaxed text-paper/90">
+            <p className="text-base leading-relaxed text-ink/80">
               <span className="font-semibold text-gold">TL;DR. </span>
               {siteContent.tldr}
             </p>
@@ -113,15 +123,27 @@ export default function HomePage() {
 
         <section id="abstract" className="px-6 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="text-center font-display text-3xl text-paper">
+            <h2 className="text-center font-display text-3xl text-ink">
               Introduction
             </h2>
+            <figure className="mt-10">
+              <img
+                src={asset('/images/graphical_abstract_1.jpg')}
+                alt="DLCL graphical abstract"
+                className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+              />
+              <Caption>
+                Graphical abstract. (a) GNSS degradation and missed detections cascade through time.
+                (b) DLCL architecture: dataset, multi-camera detection, and LSTM Perception Recovery.
+                (c) Localization gains from adaptive perception and multi-robot vision–GNSS fusion.
+              </Caption>
+            </figure>
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               <figure>
                 <img
                   src={asset('/images/intro/abc_day.jpeg')}
                   alt="Field tests in daytime"
-                  className="w-full rounded-xl border border-white/10 object-cover"
+                  className="w-full rounded-xl border border-gray-200 object-cover"
                 />
                 <Caption>Field tests in daytime — Alpha, Bravo, and Charlie.</Caption>
               </figure>
@@ -129,7 +151,7 @@ export default function HomePage() {
                 <img
                   src={asset('/images/intro/abc_twilight.jpg')}
                   alt="Field tests in twilight"
-                  className="w-full rounded-xl border border-white/10 object-cover"
+                  className="w-full rounded-xl border border-gray-200 object-cover"
                 />
                 <Caption>Field tests in twilight, when Perception Recovery matters most.</Caption>
               </figure>
@@ -142,9 +164,9 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="contributions" className="border-y border-white/10 bg-black/20 px-6 py-16">
+        <section id="contributions" className="border-y border-gray-200 bg-gray-50 px-6 py-16">
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-center font-display text-3xl text-paper">
+            <h2 className="text-center font-display text-3xl text-ink">
               Key Contributions
             </h2>
             <ul className="mt-10 space-y-6">
@@ -160,12 +182,12 @@ export default function HomePage() {
 
         <section id="methodology" className="px-6 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="border-b border-white/10 pb-3 font-display text-3xl text-paper">
+            <h2 className="border-b border-gray-200 pb-3 font-display text-3xl text-ink">
               Methodology
             </h2>
 
             <div className="mt-12">
-              <h3 className="font-display text-2xl text-paper">Hardware</h3>
+              <h3 className="font-display text-2xl text-ink">Hardware</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
                 {siteContent.methodology.hardware}
               </p>
@@ -179,7 +201,7 @@ export default function HomePage() {
                     <img
                       src={asset(item.src)}
                       alt={item.label}
-                      className="aspect-[4/3] w-full rounded-xl border border-white/10 object-cover"
+                      className="aspect-[4/3] w-full rounded-xl border border-gray-200 object-cover"
                     />
                     <Caption>{item.label}</Caption>
                   </figure>
@@ -188,7 +210,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">Perception</h3>
+              <h3 className="font-display text-2xl text-ink">Perception</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
                 {siteContent.methodology.perception}
               </p>
@@ -196,7 +218,7 @@ export default function HomePage() {
                 <img
                   src={asset('/images/method/illustration.png')}
                   alt="Camera layout for cooperative detection"
-                  className="mx-auto w-full max-w-2xl rounded-xl border border-white/10 bg-white object-contain p-2"
+                  className="mx-auto w-full max-w-2xl rounded-xl border border-gray-200 bg-white object-contain p-2"
                 />
                 <Caption>
                   Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
@@ -205,7 +227,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Perception Recovery
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -215,7 +237,7 @@ export default function HomePage() {
                 <img
                   src={asset('/images/complete_model_arch.jpg')}
                   alt="DLCL perception and localization pipeline"
-                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                 />
                 <Caption>
                   Each robot runs calibration, YOLO, Perception Recovery, pose estimation, and Kalman filtering before cooperative fusion.
@@ -224,7 +246,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Cooperative localization
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -234,7 +256,7 @@ export default function HomePage() {
                 <img
                   src={asset('/images/graphical_abstract_1.jpg')}
                   alt="DLCL architecture overview"
-                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                 />
                 <Caption>
                   GNSS degradation and missed detections cascade through time; DLCL forecasts confidence, recovers perception, and fuses vision with GNSS.
@@ -243,7 +265,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Simulation-to-real stack
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -253,25 +275,25 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="results" className="border-y border-white/10 bg-black/20 px-6 py-16">
+        <section id="results" className="border-y border-gray-200 bg-gray-50 px-6 py-16">
           <div className="mx-auto max-w-5xl">
-            <h2 className="font-display text-3xl text-paper">Results</h2>
+            <h2 className="font-display text-3xl text-ink">Results</h2>
 
             <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {siteContent.stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="border border-gold/20 bg-ink p-5 text-center"
+                  className="border border-gray-200 bg-white p-5 text-center shadow-sm"
                 >
                   <p className="font-display text-3xl text-gold">{stat.value}</p>
-                  <p className="mt-2 text-sm font-medium text-paper">{stat.label}</p>
+                  <p className="mt-2 text-sm font-medium text-ink">{stat.label}</p>
                   <p className="mt-1 text-xs text-mist">{stat.sub}</p>
                 </div>
               ))}
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">Detection benchmark</h3>
+              <h3 className="font-display text-2xl text-ink">Detection benchmark</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
                 {siteContent.results.detection}
               </p>
@@ -281,7 +303,7 @@ export default function HomePage() {
                     {siteContent.detectorTable.caption}
                   </caption>
                   <thead>
-                    <tr className="border-b border-white/15 text-gold">
+                    <tr className="border-b border-gray-200 text-gold">
                       {siteContent.detectorTable.headers.map((h) => (
                         <th key={h} className="py-2 pr-4 font-medium">
                           {h}
@@ -289,9 +311,9 @@ export default function HomePage() {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="text-paper/90">
+                  <tbody className="text-ink">
                     {siteContent.detectorTable.rows.map((row) => (
-                      <tr key={row[0]} className="border-b border-white/10">
+                      <tr key={row[0]} className="border-b border-gray-200">
                         {row.map((cell, i) => (
                           <td
                             key={`${row[0]}-${i}`}
@@ -322,7 +344,7 @@ export default function HomePage() {
                     key={src}
                     src={asset(src)}
                     alt="YOLO detection on the UAV–UGV dataset"
-                    className="aspect-video w-full rounded-lg border border-white/10 object-cover"
+                    className="aspect-video w-full rounded-lg border border-gray-200 object-cover"
                   />
                 ))}
               </div>
@@ -332,7 +354,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Perception Recovery, in the field
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -392,7 +414,7 @@ export default function HomePage() {
                     {siteContent.recoveryTable.caption}
                   </caption>
                   <thead>
-                    <tr className="border-b border-white/15 text-gold">
+                    <tr className="border-b border-gray-200 text-gold">
                       {siteContent.recoveryTable.headers.map((h) => (
                         <th key={h} className="py-2 pr-4 font-medium">
                           {h}
@@ -400,11 +422,11 @@ export default function HomePage() {
                       ))}
                     </tr>
                   </thead>
-                  <tbody className="text-paper/90">
+                  <tbody className="text-ink">
                     {siteContent.recoveryTable.rows.map((row) => (
                       <tr
                         key={row[0]}
-                        className={`border-b border-white/10 ${
+                        className={`border-b border-gray-200 ${
                           row[0].endsWith('-PR') ? 'bg-gold/5' : ''
                         }`}
                       >
@@ -429,7 +451,7 @@ export default function HomePage() {
                     <img
                       src={asset(item.src)}
                       alt={item.label}
-                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                     />
                     <Caption>{item.label} — base YOLO vs. Perception Recovery.</Caption>
                   </figure>
@@ -458,7 +480,7 @@ export default function HomePage() {
                     <img
                       src={asset(item.src)}
                       alt={item.label}
-                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                     />
                     <Caption>{item.label}. Left: raw detector. Middle: ground truth. Right: PR-corrected.</Caption>
                   </figure>
@@ -467,7 +489,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">Localization</h3>
+              <h3 className="font-display text-2xl text-ink">Localization</h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
                 {siteContent.results.localization}
               </p>
@@ -481,7 +503,7 @@ export default function HomePage() {
                     <img
                       src={asset(item.src)}
                       alt={`${item.label} 3-sigma uncertainty ellipsoid`}
-                      className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                     />
                     <Caption>{item.label} — GNSS (red) vs. fused GNSS+vision (blue).</Caption>
                   </figure>
@@ -491,14 +513,14 @@ export default function HomePage() {
                 <img
                   src={asset('/images/results/abc_cov_big.png')}
                   alt="Covariance heatmap after fusion"
-                  className="mx-auto w-full max-w-xl rounded-xl border border-white/10 bg-white object-contain p-2"
+                  className="mx-auto w-full max-w-xl rounded-xl border border-gray-200 bg-white object-contain p-2"
                 />
                 <Caption>Covariance heatmap after cooperative fusion.</Caption>
               </figure>
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Ablation — team size
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -509,7 +531,7 @@ export default function HomePage() {
                   <img
                     src={asset('/images/agents_rmse.jpg')}
                     alt="RMSE versus number of cooperating agents"
-                    className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                    className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                   />
                   <Caption>RMSE falls as more agents join GNSS+vision fusion.</Caption>
                 </figure>
@@ -517,7 +539,7 @@ export default function HomePage() {
                   <img
                     src={asset('/images/agents_uncert.jpg')}
                     alt="Uncertainty versus number of cooperating agents"
-                    className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                    className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                   />
                   <Caption>3σ uncertainty keeps tightening; GNSS-only stays flat.</Caption>
                 </figure>
@@ -525,7 +547,7 @@ export default function HomePage() {
             </div>
 
             <div className="mt-14">
-              <h3 className="font-display text-2xl text-paper">
+              <h3 className="font-display text-2xl text-ink">
                 Ablation — crop size vs. distance
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
@@ -535,7 +557,7 @@ export default function HomePage() {
                 <img
                   src={asset('/images/alpha_charlie_ab.jpg')}
                   alt="Crop size versus altitude detection matrix"
-                  className="w-full rounded-xl border border-white/10 bg-white object-contain p-2"
+                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                 />
                 <Caption>
                   Detection is governed by crop resolution; 192 px is the empirical floor for embedded deployment.
@@ -547,13 +569,13 @@ export default function HomePage() {
 
         <section id="qa" className="px-6 py-16">
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-center font-display text-3xl text-paper">
+            <h2 className="text-center font-display text-3xl text-ink">
               Questions and Answers
             </h2>
             <div className="mt-10 space-y-8">
               {siteContent.qa.map((item) => (
                 <div key={item.q}>
-                  <p className="font-medium text-paper">Q: {item.q}</p>
+                  <p className="font-medium text-ink">Q: {item.q}</p>
                   <p className="mt-2 pl-4 text-sm leading-relaxed text-mist">
                     {item.a}
                   </p>
@@ -563,10 +585,10 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="citation" className="border-t border-white/10 bg-black/20 px-6 py-16">
+        <section id="citation" className="border-t border-gray-200 bg-gray-50 px-6 py-16">
           <div className="mx-auto max-w-3xl">
-            <h2 className="font-display text-3xl text-paper">Citation</h2>
-            <pre className="mt-6 overflow-x-auto rounded-xl border border-white/10 bg-ink p-5 text-xs leading-relaxed text-paper/80">
+            <h2 className="font-display text-3xl text-ink">Citation</h2>
+            <pre className="mt-6 overflow-x-auto rounded-xl border border-gray-200 bg-gray-50 p-5 text-xs leading-relaxed text-ink">
               {siteContent.citation}
             </pre>
             <CopyCitation citation={siteContent.citation} />
@@ -575,7 +597,7 @@ export default function HomePage() {
 
         <section className="px-6 py-16">
           <div className="mx-auto max-w-3xl text-center">
-            <h2 className="font-display text-3xl text-paper">Paper &amp; Contact</h2>
+            <h2 className="font-display text-3xl text-ink">Paper &amp; Contact</h2>
             <p className="mt-6 text-sm text-mist">
               Corresponding author:{' '}
               <a
@@ -593,7 +615,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <footer className="border-t border-white/10 px-6 py-8 text-center text-xs text-mist">
+        <footer className="border-t border-gray-200 px-6 py-8 text-center text-xs text-mist">
           {siteContent.name} · University of Nebraska–Lincoln
         </footer>
       </main>

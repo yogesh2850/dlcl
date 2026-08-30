@@ -8,7 +8,7 @@ const config: Config = {
         ink: '#0c1220',
         paper: '#f4efe6',
         gold: '#c4a35a',
-        mist: '#8b93a7',
+        mist: '#64748b',
       },
       fontFamily: {
         display: ['Fraunces', 'Georgia', 'serif'],

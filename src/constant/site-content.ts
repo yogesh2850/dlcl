@@ -63,16 +63,19 @@ export const siteContent = {
     {
       href: '/paper/dlcl.pdf',
       label: 'Paper (IJCV, under review)',
+      icon: '/svg/paper.svg',
       live: true,
     },
     {
       href: '',
       label: 'Dataset — coming on acceptance',
+      icon: '/svg/dataset.svg',
       live: false,
     },
     {
       href: 'mailto:krishna@huskers.unl.edu?subject=DLCL%20code%20request',
       label: 'Code — available on request',
+      icon: '/svg/github.svg',
       live: true,
     },
   ],
