@@ -109,7 +109,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <figure className="relative z-10 mx-auto mt-14 w-full max-w-[96rem] px-2 sm:px-4">
+          <figure className="relative z-10 mx-auto mt-14 w-full max-w-[calc(64rem*1.1)] px-4">
             <img
               src={asset('/images/graphical_abstract_1.jpg')}
               alt="DLCL graphical abstract"
