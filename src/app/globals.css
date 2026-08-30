@@ -9,3 +9,7 @@ html {
 body {
   @apply bg-white text-ink antialiased;
 }
+
+summary {
+  list-style: none;
+}

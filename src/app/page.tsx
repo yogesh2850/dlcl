@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import CopyCitation from '@/components/CopyCitation';
 import FigureSlider from '@/components/FigureSlider';
+import QaAccordion from '@/components/QaAccordion';
+import RecoveryHighlights from '@/components/RecoveryHighlights';
 import StickyNav from '@/components/StickyNav';
 import { siteContent } from '@/constant/site-content';
 import { asset } from '@/lib/asset';
@@ -8,6 +10,75 @@ import { asset } from '@/lib/asset';
 function Caption({ children }: { children: ReactNode }) {
   return (
     <p className="mt-2 text-center text-xs leading-relaxed text-ink">{children}</p>
+  );
+}
+
+function SplitBlock({
+  heading,
+  reverse,
+  children,
+  media,
+}: {
+  heading: string;
+  reverse?: boolean;
+  children: ReactNode;
+  media: ReactNode;
+}) {
+  return (
+    <div className="mt-14 grid items-start gap-8 lg:grid-cols-2">
+      <div className={reverse ? 'lg:order-2' : undefined}>
+        <h3 className="font-display text-2xl text-ink">{heading}</h3>
+        <div className="mt-3 text-sm leading-relaxed text-ink">{children}</div>
+      </div>
+      <div className={reverse ? 'lg:order-1' : undefined}>{media}</div>
+    </div>
+  );
+}
+
+function TwilightGrid({
+  label,
+  withSrc,
+  withoutSrc,
+  caption,
+}: {
+  label: string;
+  withSrc: (i: number) => string;
+  withoutSrc: (i: number) => string;
+  caption: string;
+}) {
+  return (
+    <figure>
+      <p className="mb-2 text-xs font-medium text-ink">{label}</p>
+      <div className="grid grid-cols-[4.5rem_1fr] items-center gap-x-2 gap-y-2">
+        <p className="text-[11px] font-medium uppercase leading-tight tracking-wide text-gold">
+          With PR
+        </p>
+        <div className="grid grid-cols-4 gap-1.5">
+          {[1, 2, 3, 4].map((i) => (
+            <img
+              key={`${label}-pr-${i}`}
+              src={asset(withSrc(i))}
+              alt={`${label} with Perception Recovery`}
+              className="aspect-[4/3] w-full rounded-md border border-gray-200 object-cover"
+            />
+          ))}
+        </div>
+        <p className="text-[11px] font-medium uppercase leading-tight tracking-wide text-mist">
+          Without PR
+        </p>
+        <div className="grid grid-cols-4 gap-1.5">
+          {[1, 2, 3, 4].map((i) => (
+            <img
+              key={`${label}-base-${i}`}
+              src={asset(withoutSrc(i))}
+              alt={`${label} without Perception Recovery`}
+              className="aspect-[4/3] w-full rounded-md border border-gray-200 object-cover"
+            />
+          ))}
+        </div>
+      </div>
+      <Caption>{caption}</Caption>
+    </figure>
   );
 }
 
@@ -186,55 +257,58 @@ export default function HomePage() {
               Methodology
             </h2>
 
-            <div className="mt-12">
-              <h3 className="font-display text-2xl text-ink">Hardware</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.methodology.hardware}
-              </p>
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {[
-                  { src: '/images/exp_setup/alpha.jpeg', label: 'Alpha — Wispr Ranger Pro quadcopter' },
-                  { src: '/images/exp_setup/bravo.jpeg', label: 'Bravo — in-house hexacopter' },
-                  { src: '/images/exp_setup/charlie.jpeg', label: 'Charlie — shaft-drive 4WD UGV' },
-                ].map((item) => (
-                  <figure key={item.src}>
-                    <img
-                      src={asset(item.src)}
-                      alt={item.label}
-                      className="aspect-[4/3] w-full rounded-xl border border-gray-200 object-cover"
-                    />
-                    <Caption>{item.label}</Caption>
-                  </figure>
-                ))}
-              </div>
-            </div>
+            <SplitBlock
+              heading="Hardware"
+              media={
+                <div className="grid grid-cols-3 gap-2">
+                  {[
+                    { src: '/images/exp_setup/alpha.jpeg', label: 'Alpha — quadcopter' },
+                    { src: '/images/exp_setup/bravo.jpeg', label: 'Bravo — hexacopter' },
+                    { src: '/images/exp_setup/charlie.jpeg', label: 'Charlie — UGV' },
+                  ].map((item) => (
+                    <figure key={item.src}>
+                      <img
+                        src={asset(item.src)}
+                        alt={item.label}
+                        className="aspect-[4/3] w-full rounded-xl border border-gray-200 object-cover"
+                      />
+                      <Caption>{item.label}</Caption>
+                    </figure>
+                  ))}
+                </div>
+              }
+            >
+              {siteContent.methodology.hardware}
+            </SplitBlock>
 
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">Perception</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.methodology.perception}
-              </p>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/method/illustration.png')}
-                  alt="Camera layout for cooperative detection"
-                  className="mx-auto w-full max-w-2xl rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>
-                  Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
-                </Caption>
-              </figure>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/complete_model_arch.jpg')}
-                  alt="DLCL perception and localization pipeline"
-                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>
-                  Each robot runs calibration, YOLO, Perception Recovery, pose estimation, and Kalman filtering before cooperative fusion.
-                </Caption>
-              </figure>
-            </div>
+            <SplitBlock
+              heading="Perception"
+              reverse
+              media={
+                <figure>
+                  <img
+                    src={asset('/images/method/illustration.png')}
+                    alt="Camera layout for cooperative detection"
+                    className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+                  />
+                  <Caption>
+                    Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
+                  </Caption>
+                </figure>
+              }
+            >
+              {siteContent.methodology.perception}
+            </SplitBlock>
+            <figure className="mt-8">
+              <img
+                src={asset('/images/complete_model_arch.jpg')}
+                alt="DLCL perception and localization pipeline"
+                className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+              />
+              <Caption>
+                Each robot runs calibration, YOLO, Perception Recovery, pose estimation, and Kalman filtering before cooperative fusion.
+              </Caption>
+            </figure>
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">
@@ -282,154 +356,118 @@ export default function HomePage() {
               ))}
             </div>
 
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">Detection benchmark</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.results.detection}
-              </p>
-              <div className="mt-6 overflow-x-auto">
-                <table className="w-full min-w-[32rem] text-left text-sm">
-                  <caption className="mb-3 text-left text-xs text-mist">
-                    {siteContent.detectorTable.caption}
-                  </caption>
-                  <thead>
-                    <tr className="border-b border-gray-200 text-gold">
-                      {siteContent.detectorTable.headers.map((h) => (
-                        <th key={h} className="py-2 pr-4 font-medium">
-                          {h}
-                        </th>
+            <SplitBlock
+              heading="Detection benchmark"
+              media={
+                <div className="space-y-3">
+                  <div>
+                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gold">
+                      UAV
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['/images/uav_00.jpg', '/images/uav_01.jpeg', '/images/uav_02.jpeg'].map(
+                        (src) => (
+                          <img
+                            key={src}
+                            src={asset(src)}
+                            alt="UAV detection on the UAV–UGV dataset"
+                            className="aspect-[4/3] w-full rounded-lg border border-gray-200 object-cover"
+                          />
+                        ),
+                      )}
+                    </div>
+                  </div>
+                  <div>
+                    <p className="mb-2 text-xs font-medium uppercase tracking-wide text-gold">
+                      UGV
+                    </p>
+                    <div className="grid grid-cols-3 gap-2">
+                      {['/images/ugv_10.jpg', '/images/ugv_11.jpg', '/images/ugv_12.jpg'].map(
+                        (src) => (
+                          <img
+                            key={src}
+                            src={asset(src)}
+                            alt="UGV detection on the UAV–UGV dataset"
+                            className="aspect-[4/3] w-full rounded-lg border border-gray-200 object-cover"
+                          />
+                        ),
+                      )}
+                    </div>
+                  </div>
+                  <Caption>
+                    Detections on the UAV–UGV dataset across vehicle types, backgrounds, and lighting.
+                  </Caption>
+                </div>
+              }
+            >
+              {siteContent.results.detection}
+            </SplitBlock>
+            <div className="mt-8 overflow-x-auto">
+              <table className="w-full min-w-[32rem] text-left text-sm">
+                <caption className="mb-3 text-left text-xs text-mist">
+                  {siteContent.detectorTable.caption}
+                </caption>
+                <thead>
+                  <tr className="border-b border-gray-200 text-gold">
+                    {siteContent.detectorTable.headers.map((h) => (
+                      <th key={h} className="py-2 pr-4 font-medium">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="text-ink">
+                  {siteContent.detectorTable.rows.map((row) => (
+                    <tr key={row[0]} className="border-b border-gray-200">
+                      {row.map((cell, i) => (
+                        <td
+                          key={`${row[0]}-${i}`}
+                          className={`py-2 pr-4 ${
+                            row[0] === 'YOLOv11 small' && i === 1
+                              ? 'font-semibold text-gold'
+                              : ''
+                          }`}
+                        >
+                          {cell}
+                        </td>
                       ))}
                     </tr>
-                  </thead>
-                  <tbody className="text-ink">
-                    {siteContent.detectorTable.rows.map((row) => (
-                      <tr key={row[0]} className="border-b border-gray-200">
-                        {row.map((cell, i) => (
-                          <td
-                            key={`${row[0]}-${i}`}
-                            className={`py-2 pr-4 ${
-                              row[0] === 'YOLOv11 small' && i === 1
-                                ? 'font-semibold text-gold'
-                                : ''
-                            }`}
-                          >
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {[
-                  '/images/uav_00.jpg',
-                  '/images/uav_01.jpeg',
-                  '/images/uav_02.jpeg',
-                  '/images/ugv_10.jpg',
-                  '/images/ugv_11.jpg',
-                  '/images/ugv_12.jpg',
-                ].map((src) => (
-                  <img
-                    key={src}
-                    src={asset(src)}
-                    alt="YOLO detection on the UAV–UGV dataset"
-                    className="aspect-video w-full rounded-lg border border-gray-200 object-cover"
-                  />
-                ))}
-              </div>
-              <Caption>
-                Detections on the UAV–UGV dataset across vehicle types, backgrounds, and lighting.
-              </Caption>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">
-                Perception Recovery, in the field
-              </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.results.recovery}
-              </p>
-              <div className="mt-6 grid gap-6 lg:grid-cols-2">
-                <figure>
-                  <div className="grid grid-cols-4 gap-1">
-                    {[1, 2, 3, 4].map((i) => (
-                      <img
-                        key={`bravo-pr-${i}`}
-                        src={asset(`/images/results/adaptive_perception/uav/adaptive/a_uav_v9n_${i}.jpeg`)}
-                        alt=""
-                        className="aspect-video w-full object-cover"
-                      />
-                    ))}
-                    {[1, 2, 3, 4].map((i) => (
-                      <img
-                        key={`bravo-base-${i}`}
-                        src={asset(`/images/results/adaptive_perception/uav/base/b_uav_v9n_${i}.jpeg`)}
-                        alt=""
-                        className="aspect-video w-full object-cover"
-                      />
-                    ))}
-                  </div>
-                  <Caption>
-                    Bravo at twilight: YOLOv10-nano with Perception Recovery (top) vs. without (bottom).
-                  </Caption>
-                </figure>
-                <figure>
-                  <div className="grid grid-cols-4 gap-1">
-                    {[1, 2, 3, 4].map((i) => (
-                      <img
-                        key={`charlie-pr-${i}`}
-                        src={asset(`/images/results/adaptive_perception/ugv/adaptive/a_ugv_v10n_${i}.jpeg`)}
-                        alt=""
-                        className="aspect-video w-full object-cover"
-                      />
-                    ))}
-                    {[1, 2, 3, 4].map((i) => (
-                      <img
-                        key={`charlie-base-${i}`}
-                        src={asset(`/images/results/adaptive_perception/ugv/base/b_ugv_v10n_${i}.jpeg`)}
-                        alt=""
-                        className="aspect-video w-full object-cover"
-                      />
-                    ))}
-                  </div>
-                  <Caption>
-                    Charlie at twilight: YOLOv9-tiny with Perception Recovery (top) vs. without (bottom).
-                  </Caption>
-                </figure>
-              </div>
-              <div className="mt-8 overflow-x-auto">
-                <table className="w-full min-w-[32rem] text-left text-sm">
-                  <caption className="mb-3 text-left text-xs text-mist">
-                    {siteContent.recoveryTable.caption}
-                  </caption>
-                  <thead>
-                    <tr className="border-b border-gray-200 text-gold">
-                      {siteContent.recoveryTable.headers.map((h) => (
-                        <th key={h} className="py-2 pr-4 font-medium">
-                          {h}
-                        </th>
-                      ))}
-                    </tr>
-                  </thead>
-                  <tbody className="text-ink">
-                    {siteContent.recoveryTable.rows.map((row) => (
-                      <tr
-                        key={row[0]}
-                        className={`border-b border-gray-200 ${
-                          row[0].endsWith('-PR') ? 'bg-gold/5' : ''
-                        }`}
-                      >
-                        {row.map((cell, i) => (
-                          <td key={`${row[0]}-${i}`} className="py-2 pr-4">
-                            {cell}
-                          </td>
-                        ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+            <SplitBlock
+              heading="Perception Recovery, in the field"
+              reverse
+              media={
+                <div className="space-y-6">
+                  <TwilightGrid
+                    label="Bravo at twilight"
+                    withSrc={(i) =>
+                      `/images/results/adaptive_perception/uav/adaptive/a_uav_v9n_${i}.jpeg`
+                    }
+                    withoutSrc={(i) =>
+                      `/images/results/adaptive_perception/uav/base/b_uav_v9n_${i}.jpeg`
+                    }
+                    caption="YOLOv10-nano with Perception Recovery (top) vs. without (bottom)."
+                  />
+                  <TwilightGrid
+                    label="Charlie at twilight"
+                    withSrc={(i) =>
+                      `/images/results/adaptive_perception/ugv/adaptive/a_ugv_v10n_${i}.jpeg`
+                    }
+                    withoutSrc={(i) =>
+                      `/images/results/adaptive_perception/ugv/base/b_ugv_v10n_${i}.jpeg`
+                    }
+                    caption="YOLOv9-tiny with Perception Recovery (top) vs. without (bottom)."
+                  />
+                </div>
+              }
+            >
+              {siteContent.results.recovery}
+            </SplitBlock>
+            <RecoveryHighlights />
               <div className="mt-8 grid gap-3 sm:grid-cols-2">
                 {[
                   { src: '/images/PR_results/T1C0_plot.jpg', label: 'Dataset 1, iPhone 6' },
@@ -470,84 +508,85 @@ export default function HomePage() {
                   ]}
                 />
               </div>
-            </div>
 
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">Localization</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.results.localization}
-              </p>
-              <div className="mt-6 grid gap-4 sm:grid-cols-3">
-                {[
-                  { src: '/images/results/localization/alpha_ellipsoid.png', label: 'Alpha' },
-                  { src: '/images/results/localization/bravo_ellipsoid.png', label: 'Bravo' },
-                  { src: '/images/results/localization/charlie_ellipsoid.png', label: 'Charlie' },
-                ].map((item) => (
-                  <figure key={item.src}>
+            <SplitBlock
+              heading="Localization"
+              media={
+                <div>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { src: '/images/results/localization/alpha_ellipsoid.png', label: 'Alpha' },
+                      { src: '/images/results/localization/bravo_ellipsoid.png', label: 'Bravo' },
+                      { src: '/images/results/localization/charlie_ellipsoid.png', label: 'Charlie' },
+                    ].map((item) => (
+                      <figure key={item.src}>
+                        <img
+                          src={asset(item.src)}
+                          alt={`${item.label} 3-sigma uncertainty ellipsoid`}
+                          className="aspect-square w-full rounded-xl border border-gray-200 bg-white object-contain p-1"
+                        />
+                        <Caption>{item.label}</Caption>
+                      </figure>
+                    ))}
+                  </div>
+                  <figure className="mt-3">
                     <img
-                      src={asset(item.src)}
-                      alt={`${item.label} 3-sigma uncertainty ellipsoid`}
+                      src={asset('/images/results/abc_cov_big.png')}
+                      alt="Covariance heatmap after fusion"
                       className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                     />
-                    <Caption>{item.label} — GNSS (red) vs. fused GNSS+vision (blue).</Caption>
+                    <Caption>Covariance heatmap after cooperative fusion. GNSS (red) vs. fused GNSS+vision (blue) on the ellipsoids above.</Caption>
                   </figure>
-                ))}
-              </div>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/results/abc_cov_big.png')}
-                  alt="Covariance heatmap after fusion"
-                  className="mx-auto w-full max-w-xl rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>Covariance heatmap after cooperative fusion.</Caption>
-              </figure>
-            </div>
+                </div>
+              }
+            >
+              {siteContent.results.localization}
+            </SplitBlock>
 
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">
-                Ablation — team size
-              </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.results.teamSize}
-              </p>
-              <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            <SplitBlock
+              heading="Ablation — team size"
+              reverse
+              media={
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <figure>
+                    <img
+                      src={asset('/images/agents_rmse.jpg')}
+                      alt="RMSE versus number of cooperating agents"
+                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+                    />
+                    <Caption>RMSE falls as more agents join GNSS+vision fusion.</Caption>
+                  </figure>
+                  <figure>
+                    <img
+                      src={asset('/images/agents_uncert.jpg')}
+                      alt="Uncertainty versus number of cooperating agents"
+                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+                    />
+                    <Caption>3σ uncertainty keeps tightening; GNSS-only stays flat.</Caption>
+                  </figure>
+                </div>
+              }
+            >
+              {siteContent.results.teamSize}
+            </SplitBlock>
+
+            <SplitBlock
+              heading="Ablation — crop size vs. distance"
+              media={
                 <figure>
                   <img
-                    src={asset('/images/agents_rmse.jpg')}
-                    alt="RMSE versus number of cooperating agents"
+                    src={asset('/images/alpha_charlie_ab.jpg')}
+                    alt="Crop size versus altitude detection matrix"
                     className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
                   />
-                  <Caption>RMSE falls as more agents join GNSS+vision fusion.</Caption>
+                  <Caption>
+                    Detection is governed by crop resolution; 192 px is the empirical floor for embedded deployment.
+                  </Caption>
                 </figure>
-                <figure>
-                  <img
-                    src={asset('/images/agents_uncert.jpg')}
-                    alt="Uncertainty versus number of cooperating agents"
-                    className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-                  />
-                  <Caption>3σ uncertainty keeps tightening; GNSS-only stays flat.</Caption>
-                </figure>
-              </div>
-            </div>
-
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">
-                Ablation — crop size vs. distance
-              </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.results.crop}
-              </p>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/alpha_charlie_ab.jpg')}
-                  alt="Crop size versus altitude detection matrix"
-                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>
-                  Detection is governed by crop resolution; 192 px is the empirical floor for embedded deployment.
-                </Caption>
-              </figure>
-            </div>
+              }
+            >
+              {siteContent.results.crop}
+            </SplitBlock>
           </div>
         </section>
 
@@ -556,16 +595,7 @@ export default function HomePage() {
             <h2 className="text-center font-display text-3xl text-ink">
               Questions and Answers
             </h2>
-            <div className="mt-10 space-y-8">
-              {siteContent.qa.map((item) => (
-                <div key={item.q}>
-                  <p className="font-medium text-ink">Q: {item.q}</p>
-                  <p className="mt-2 pl-4 text-sm leading-relaxed text-ink">
-                    {item.a}
-                  </p>
-                </div>
-              ))}
-            </div>
+            <QaAccordion />
           </div>
         </section>
 
