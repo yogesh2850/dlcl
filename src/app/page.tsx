@@ -211,7 +211,7 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">Perception</h3>
-              <div className="mt-3 grid items-start gap-8 lg:grid-cols-2">
+              <div className="mt-3 grid items-start gap-8 lg:grid-cols-[7fr_13fr]">
                 <p className="text-sm leading-relaxed text-ink">
                   {siteContent.methodology.perception}
                 </p>
