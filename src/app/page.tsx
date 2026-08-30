@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import CopyCitation from '@/components/CopyCitation';
+import FigureSlider from '@/components/FigureSlider';
 import StickyNav from '@/components/StickyNav';
 import { siteContent } from '@/constant/site-content';
 import { asset } from '@/lib/asset';
@@ -446,34 +447,28 @@ export default function HomePage() {
                   </figure>
                 ))}
               </div>
-              <div className="mt-8 grid gap-4">
-                {[
-                  {
-                    src: '/images/PR_results/combined_T1C0_v8s_vs_v8s_pr.jpg',
-                    label: 'Dataset-1 Cam0: YOLOv8s vs YOLOv8s-PR',
-                  },
-                  {
-                    src: '/images/PR_results/combined_T1C0_v8x_vs_v8s_pr.jpg',
-                    label: 'Dataset-1 Cam0: YOLOv8x vs YOLOv8s-PR',
-                  },
-                  {
-                    src: '/images/PR_results/combined_T2C0_v9e_vs_v9t_pr.jpg',
-                    label: 'Dataset-2 Cam0: YOLOv9e vs YOLOv9t-PR',
-                  },
-                  {
-                    src: '/images/PR_results/combined_T2C0_v9t_vs_v9t_pr.jpg',
-                    label: 'Dataset-2 Cam0: YOLOv9t vs YOLOv9t-PR',
-                  },
-                ].map((item) => (
-                  <figure key={item.src}>
-                    <img
-                      src={asset(item.src)}
-                      alt={item.label}
-                      className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-                    />
-                    <Caption>{item.label}. Left: raw detector. Middle: ground truth. Right: PR-corrected.</Caption>
-                  </figure>
-                ))}
+              <div className="mt-8">
+                <FigureSlider
+                  captionSuffix="Left: raw detector. Middle: ground truth. Right: PR-corrected."
+                  slides={[
+                    {
+                      src: '/images/PR_results/combined_T1C0_v8s_vs_v8s_pr.jpg',
+                      label: 'Dataset-1 Cam0: YOLOv8s vs YOLOv8s-PR',
+                    },
+                    {
+                      src: '/images/PR_results/combined_T1C0_v8x_vs_v8s_pr.jpg',
+                      label: 'Dataset-1 Cam0: YOLOv8x vs YOLOv8s-PR',
+                    },
+                    {
+                      src: '/images/PR_results/combined_T2C0_v9e_vs_v9t_pr.jpg',
+                      label: 'Dataset-2 Cam0: YOLOv9e vs YOLOv9t-PR',
+                    },
+                    {
+                      src: '/images/PR_results/combined_T2C0_v9t_vs_v9t_pr.jpg',
+                      label: 'Dataset-2 Cam0: YOLOv9t vs YOLOv9t-PR',
+                    },
+                  ]}
+                />
               </div>
             </div>
 
