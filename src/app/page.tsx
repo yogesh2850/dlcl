@@ -6,7 +6,7 @@ import { asset } from '@/lib/asset';
 
 function Caption({ children }: { children: ReactNode }) {
   return (
-    <p className="mt-2 text-center text-xs leading-relaxed text-mist">{children}</p>
+    <p className="mt-2 text-center text-xs leading-relaxed text-ink">{children}</p>
   );
 }
 
@@ -100,7 +100,7 @@ export default function HomePage() {
                 ) : (
                   <span
                     key={link.label}
-                    className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2 text-sm text-mist"
+                    className="flex items-center gap-2 rounded-full border border-gray-200 bg-gray-50 px-5 py-2 text-sm text-gray-400"
                   >
                     {inner}
                   </span>
@@ -125,7 +125,7 @@ export default function HomePage() {
 
         <section className="px-6 py-12">
           <div className="mx-auto max-w-3xl rounded-2xl border border-gold/25 bg-gold/5 px-6 py-6 sm:px-8">
-            <p className="text-base leading-relaxed text-ink/80">
+            <p className="text-base leading-relaxed text-ink">
               <span className="font-semibold text-gold">TL;DR. </span>
               {siteContent.tldr}
             </p>

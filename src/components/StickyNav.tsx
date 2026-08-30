@@ -48,7 +48,7 @@ export default function StickyNav() {
               className={`whitespace-nowrap rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
                 active === id
                   ? 'bg-ink text-white'
-                  : 'text-ink/70 hover:bg-gray-100 hover:text-gold'
+                  : 'text-ink hover:bg-gray-100 hover:text-gold'
               }`}
             >
               {label}
