@@ -211,19 +211,21 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">Perception</h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink">
-                {siteContent.methodology.perception}
-              </p>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/method/illustration.png')}
-                  alt="Camera layout for cooperative detection"
-                  className="mx-auto w-full max-w-2xl rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>
-                  Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
-                </Caption>
-              </figure>
+              <div className="mt-3 grid items-start gap-8 lg:grid-cols-2">
+                <p className="text-sm leading-relaxed text-ink">
+                  {siteContent.methodology.perception}
+                </p>
+                <figure>
+                  <img
+                    src={asset('/images/method/illustration.png')}
+                    alt="Camera layout for cooperative detection"
+                    className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
+                  />
+                  <Caption>
+                    Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
+                  </Caption>
+                </figure>
+              </div>
               <figure className="mt-6">
                 <img
                   src={asset('/images/complete_model_arch.jpg')}
