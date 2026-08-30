@@ -223,15 +223,6 @@ export default function HomePage() {
                   Downward cameras on Alpha and Bravo detect Charlie; Charlie looks up; Alpha and Bravo triangulate each other in stereo.
                 </Caption>
               </figure>
-            </div>
-
-            <div className="mt-14">
-              <h3 className="font-display text-2xl text-ink">
-                Perception Recovery
-              </h3>
-              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
-                {siteContent.methodology.recovery}
-              </p>
               <figure className="mt-6">
                 <img
                   src={asset('/images/complete_model_arch.jpg')}
@@ -246,21 +237,20 @@ export default function HomePage() {
 
             <div className="mt-14">
               <h3 className="font-display text-2xl text-ink">
+                Perception Recovery
+              </h3>
+              <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
+                {siteContent.methodology.recovery}
+              </p>
+            </div>
+
+            <div className="mt-14">
+              <h3 className="font-display text-2xl text-ink">
                 Cooperative localization
               </h3>
               <p className="mt-3 max-w-3xl text-sm leading-relaxed text-mist">
                 {siteContent.methodology.localization}
               </p>
-              <figure className="mt-6">
-                <img
-                  src={asset('/images/graphical_abstract_1.jpg')}
-                  alt="DLCL architecture overview"
-                  className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-                />
-                <Caption>
-                  GNSS degradation and missed detections cascade through time; DLCL forecasts confidence, recovers perception, and fuses vision with GNSS.
-                </Caption>
-              </figure>
             </div>
 
             <div className="mt-14">
