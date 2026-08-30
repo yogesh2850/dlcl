@@ -22,11 +22,9 @@ export default function HomePage() {
       <main>
         <section
           id="top"
-          className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-6 pb-16 pt-24 text-center"
+          className="relative flex flex-col items-center overflow-hidden px-4 pb-12 pt-24 text-center sm:px-6"
         >
-          <div className="absolute inset-0 bg-white" />
-
-          <div className="relative z-10 mx-auto max-w-4xl">
+          <div className="relative z-10 mx-auto w-full max-w-4xl">
             <h1 className="font-display text-3xl font-medium leading-snug tracking-tight sm:text-4xl md:text-5xl">
               {siteContent.titleHighlights.map((part) => (
                 <span
@@ -110,6 +108,19 @@ export default function HomePage() {
               })}
             </div>
           </div>
+
+          <figure className="relative z-10 mx-auto mt-14 w-full max-w-[96rem] px-2 sm:px-4">
+            <img
+              src={asset('/images/graphical_abstract_1.jpg')}
+              alt="DLCL graphical abstract"
+              className="w-full rounded-xl border border-gray-200 bg-white object-contain"
+            />
+            <Caption>
+              Graphical abstract. (a) GNSS degradation and missed detections cascade through time.
+              (b) DLCL architecture: dataset, multi-camera detection, and LSTM Perception Recovery.
+              (c) Localization gains from adaptive perception and multi-robot vision–GNSS fusion.
+            </Caption>
+          </figure>
         </section>
 
         <section className="px-6 py-12">
@@ -126,18 +137,6 @@ export default function HomePage() {
             <h2 className="text-center font-display text-3xl text-ink">
               Introduction
             </h2>
-            <figure className="mt-10">
-              <img
-                src={asset('/images/graphical_abstract_1.jpg')}
-                alt="DLCL graphical abstract"
-                className="w-full rounded-xl border border-gray-200 bg-white object-contain p-2"
-              />
-              <Caption>
-                Graphical abstract. (a) GNSS degradation and missed detections cascade through time.
-                (b) DLCL architecture: dataset, multi-camera detection, and LSTM Perception Recovery.
-                (c) Localization gains from adaptive perception and multi-robot vision–GNSS fusion.
-              </Caption>
-            </figure>
             <div className="mt-10 grid gap-4 sm:grid-cols-2">
               <figure>
                 <img
