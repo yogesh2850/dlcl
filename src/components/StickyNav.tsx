@@ -3,11 +3,9 @@
 import { useEffect, useState } from 'react';
 
 const NAV = [
-  { label: 'Introduction', href: '#abstract' },
-  { label: 'Contributions', href: '#contributions' },
-  { label: 'Methodology', href: '#methodology' },
+  { label: 'Overview', href: '#overview' },
+  { label: 'Highlights', href: '#highlights' },
   { label: 'Results', href: '#results' },
-  { label: 'Q & A', href: '#qa' },
   { label: 'Citation', href: '#citation' },
 ];
 
